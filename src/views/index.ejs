@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Blog Post</title>
+    <script>
+      setTimeout(function () {
+        document.querySelector(".alert-remove").remove();
+      }, 3000);
+    </script>
+  </head>
+  <body>
+    <% if (messageLoggedIn) { %>
+
+    <div
+      class="alert alert-success alert-remove alert-dismissible fade show m-3"
+      role="alert"
+    >
+      <b>Succes!</b> Du er nu logget ind.
+    </div>
+    <% } %> <% if (messageDeleted) { %>
+
+    <div
+      class="alert alert-success alert-remove alert-dismissible fade show m-3"
+      role="alert"
+    >
+      <b>Succes!</b> Postet er nu fjernet.
+    </div>
+    <% } %>
+
+    <div class="container mt-5">
+      <h2>Blog Post</h2>
+      <p class="text-muted">
+        Lav dine egne blog posts her. Kom igang <a href="/auth/google">nu</a>
+      </p>
+
+      <% if (isLoggedIn) { %>
+      <div class="mb-2">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          <i class="fa fa-plus"></i> Nyt post
+        </button>
+
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Lav et ny post
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="container mt-3 mb-5">
+                  <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                      <form action="/api/create?_method=PUT" method="POST">
+                        <div class="form-group mb-2">
+                          <label for="title">Titel</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            placeholder="Titel"
+                            onkeyup="validateTitle()"
+                          />
+                        </div>
+                        <div class="form-group mb-2">
+                          <label for="content">Indhold</label>
+                          <textarea
+                            class="form-control"
+                            id="content"
+                            name="content"
+                            rows="3"
+                            placeholder="Indhold"
+                            onkeyup="validateContent()"
+                          ></textarea>
+                        </div>
+                        <div class="form-group mb-2">
+                          <label for="title">Billede URL</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="image"
+                            placeholder="Skriv en billede URL"
+                            required
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          id="saveBtn"
+                        >
+                          Gem
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-warning mr-4"
+          onclick="window.location.href = '/auth/logout'"
+        >
+          <i class="fa-solid fa-sign-out"></i> Log af
+        </button>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="container mb-5">
+      <hr class="my-1 hr" style="width: 40%" size="6" />
+    </div>
+    <% if (posts.length === 0) { %>
+    <div class="container mb-2">
+      <p class="text-muted">Der er ingen post at se.</p>
+    </div>
+    <% } %> <% posts.forEach(post => { %>
+
+    <div class="container mb-3">
+      <div class="row">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="/post/<%- post.id %>"> <%- post.title %> </a>
+            </h5>
+            <p class="card-text"><%- post.content %></p>
+
+            <p class="card-text">
+              <small class="text-muted">
+                <b><%- post.author %></b> - <%-
+                post.createdAt.toLocaleDateString() %></small
+              >
+            </p>
+
+            <% if(isLoggedIn) { %>
+            <div class="card-text">
+              <button
+                class="btn btn-danger"
+                onclick="window.location.href = '/api/delete/<%- post.id %>'"
+              >
+                <i class="fa-solid fa-trash"></i> Slet
+              </button>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </body>
+</html>

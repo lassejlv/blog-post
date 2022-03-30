@@ -1,0 +1,12 @@
+@media screen and (max-width: 750px) {
+  body {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hr {
+    width: 100%;
+    margin: auto;
+  }
+}
