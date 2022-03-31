@@ -15,8 +15,6 @@ passport.use(
       const newUser = {
         userId: profile.id,
         name: profile.displayName,
-        avatar: profile.photos[0].value,
-        // createdAt: new Date(),
       };
 
       try {
