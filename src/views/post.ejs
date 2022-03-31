@@ -8,6 +8,7 @@
     <div class="container mt-5">
         <h2><%- post.title %></h2>
         <p class="text-muted"><%- post.createdAt.toLocaleDateString() %></p>
+
         <div class="container mb-5">
             <hr class="my-1 hr" style="width: 40%" size="6">
         </div>
@@ -16,6 +17,16 @@
 
             <%- post.content %>
 
+        </div>
+
+        <div class="container mb-5">
+            <hr class="my-1 hr" style="width: 40%" size="6">
+        </div>
+
+        <div class="row mt-3">
+            <button class="btn btn-primary" onclick="window.location.href == '/'">Gå tilbage</button>
+
+            <button class="btn btn-danger" onclick="window.location.href == '/api/delete/<%- post.id %>'"><i class="fa fa-trash"></i> Slet</button>
         </div>
     </div>
   </body>
