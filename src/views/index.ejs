@@ -30,9 +30,15 @@
 
     <div class="container mt-5">
       <h2>Blog Post</h2>
+      <% if (isLoggedIn) { %>
       <p class="text-muted">
-        Lav dine egne blog posts her. Kom igang <a href="/auth/google">nu</a>
+        Lav dine egne blog posts her.
       </p>
+      <% } else { %>
+        <p class="text-muted">
+          Lav dine egne blog posts her. Kom igang <a href="/auth/google">nu</a>
+        </p>
+        <% } %>
 
       <% if (isLoggedIn) { %>
       <div class="mb-2">
