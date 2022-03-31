@@ -24,9 +24,14 @@
         </div>
 
         <div class="mt-3">
-            <button class="btn btn-primary" onclick="window.location.href == '/'">Gå tilbage</button>
+            <a href="/">
+                <button class="btn btn-primary" onclick="window.location.href == '/'">Gå tilbage</button>
+            </a>
 
-            <button class="btn btn-danger" onclick="window.location.href == '/api/delete/<%- post.id %>'"><i class="fa fa-trash"></i> Slet</button>
+            <a href="/api/delete/<%- post.id %>">
+             <button class="btn btn-danger"><i class="fa fa-trash"></i> Slet</button>
+            </a>
+            
         </div>
     </div>
   </body>
