@@ -1,3 +1,5 @@
+const Post = require("../database/models/Post");
+
 module.exports = {
   ensureAuth: function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -13,6 +15,16 @@ module.exports = {
     } else {
       return next();
     }
+  },
+
+  ensurePostAuhor: function (req, res, next) {
+    Post.findById(req.params.id, (err, post) => {
+      if (post.author[0] === req.user.id) {
+        return next();
+      } else {
+        res.redirect("/");
+      }
+    });
   },
 
   ensureGuest: function (req, res, next) {

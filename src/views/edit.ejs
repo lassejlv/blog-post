@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Blog Post - Edit</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Rediger post</h2>
+      <p class="text-muted">Rediger din post her.</p>
+      <form action="/api/updatePost/<%- post.id %>?_method=PUT" method="POST">
+        <div class="form-group mb-2">
+          <label for="title">Titel</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            value="<%- post.title %>"
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="title">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            name="description"
+            value="<%- post.description %>"
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="content">Indhold</label>
+          <textarea class="form-control" id="content" name="content" rows="3">
+<%- post.content_mardown %></textarea
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label for="image">Billede</label>
+          <input
+            type="text"
+            class="form-control"
+            id="image"
+            name="image"
+            value="<%- post.image %>"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-save"></i> Gem
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

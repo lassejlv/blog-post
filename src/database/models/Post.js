@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
+const dompurify = require("dompurify");
+const marked = require("marked");
 
 const PostSchema = new mongoose.Schema({
   title: {
+    type: String,
+    required: true,
+  },
+
+  description: {
     type: String,
     required: true,
   },
@@ -12,9 +18,13 @@ const PostSchema = new mongoose.Schema({
     required: true,
   },
 
-  author: {
+  content_mardown: {
     type: String,
-    ref: "User",
+    required: true,
+  },
+
+  author: {
+    type: [String],
     required: true,
   },
 
@@ -27,6 +37,14 @@ const PostSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+PostSchema.pre("validate", function (next) {
+  if (this.content) {
+    this.content_mardown = marked(this.content);
+  }
+
+  next();
 });
 
 module.exports = mongoose.model("Post", PostSchema);

@@ -2,24 +2,53 @@ require("dotenv").config();
 const router = require("express").Router();
 const Post = require("../database/models/Post");
 const User = require("../database/models/User");
+const marked = require("marked");
+const dompurify = require("dompurify");
+const moment = require("moment");
 
 router.get("/", (req, res) => {
-  res.send("Welcome to the API");
+  res.redirect("/");
 });
 
 router.put("/create", (req, res) => {
-  const { title, content, image } = req.body;
+  const { title, content, image, description } = req.body;
 
   const newPost = new Post({
     title,
     content,
     image,
-    author: req.user.name,
+    description,
+    author: [req.user._id, req.user.name],
   });
 
   newPost.save();
 
-  res.redirect(`/post/${newPost.id}`);
+  const updateUser = User.findOneAndUpdate(
+    { userId: req.user.userId },
+    { $push: { posts: newPost.id } },
+    { new: true }
+  );
+
+  Promise.all([newPost, updateUser]).then(([newPost, updateUser]) => {
+    res.redirect(`/post/${newPost.id}`);
+  });
+});
+
+router.put("/updatePost/:id", (req, res) => {
+  Post.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        description: req.body.description,
+      },
+    },
+    { new: true }
+  ).then((post) => {
+    res.redirect(`/posts`);
+  });
 });
 
 router.get("/delete/:id", (req, res) => {
@@ -30,6 +59,12 @@ router.get("/delete/:id", (req, res) => {
       res.redirect("/?msg=deleted");
     }
   });
+
+  User.findOneAndUpdate(
+    { userId: req.user.userId },
+    { $pull: { posts: req.params.id } },
+    { new: true }
+  );
 });
 
 module.exports = router;
