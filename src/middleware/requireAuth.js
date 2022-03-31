@@ -9,17 +9,9 @@ module.exports = {
 
   ensureLoggedIn: function (req, res, next) {
     if (req.isAuthenticated()) {
-      res.redirect("/dashboard");
+      res.redirect("/?msg=loggedIn");
     } else {
       return next();
-    }
-  },
-
-  ensureAdmin: function (req, res, next) {
-    if (req.isAuthenticated() && req.user.site_admin === true) {
-      return next();
-    } else {
-      res.send("Page was not found on the server?");
     }
   },
 
