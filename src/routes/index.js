@@ -27,7 +27,9 @@ router.get("/post/:id", async (req, res) => {
     if (post === null) {
       res.redirect("/");
     } else {
-      res.send(post);
+      res.render("post", {
+        post: post
+      })
     }
   });
 });

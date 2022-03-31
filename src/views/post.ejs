@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Blog Post</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+        <h2><% post.title %></h2>
+        <p class="text-muted"><% post.createdAt.toLocaleDateString()</p>
+        <div class="container mb-5">
+            <hr class="my-1 hr" style="width: 40%" size="6">
+        </div>
+
+        <div class="text-muted">
+
+            <% post.content %>
+
+        </div>
+    </div>
+  </body>
+</html>
