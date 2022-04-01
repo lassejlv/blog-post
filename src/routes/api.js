@@ -67,4 +67,23 @@ router.get("/delete/:id", (req, res) => {
   );
 });
 
+// Data routes
+
+router.get("/posts", (req,res) => {
+  Post.find({}, (err, posts) => {
+    const filterPost = posts.map((post) => {
+      return {
+        title: post.title,
+        description: post.description,
+        content: post.content,
+        createdAt: post.createdAt,
+        image: post.image,
+        author: post.author[0]
+      }
+
+      res.send(filterPost)
+    })
+  })
+})
+
 module.exports = router;
