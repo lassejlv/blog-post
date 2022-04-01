@@ -69,22 +69,23 @@ router.get("/delete/:id", (req, res) => {
 
 // Data routes
 
-router.get("/posts", (req,res) => {
+router.get("/posts", (req, res) => {
   Post.find({}, (err, posts) => {
-    const filterPost = posts.map((post) => {
-      return {
-        title: post.title,
-        description: post.description,
-        content: post.content,
-        createdAt: post.createdAt,
-        image: post.image,
-        author: post.author[0]
-      }
+      const filteredUsers = posts.map((user) => {
+          return {
+              id: post.id,
+              title: post.title,
+              description: post.description,
+              content: post.content,
+              author: post.author,
+              image: post.image,
+              createdAt: post.createdAt,
 
-      res.send(filterPost)
-    })
-  })
-})
+          };
+      });
+      res.send(filteredUsers);
+  });
+});
 
 router.get("/users", (req, res) => {
   User.find({}, (err, users) => {
@@ -92,6 +93,7 @@ router.get("/users", (req, res) => {
           return {
               name: user.name,
               posts: user.posts
+              
           };
       });
       res.send(filteredUsers);
