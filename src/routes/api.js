@@ -86,4 +86,17 @@ router.get("/posts", (req,res) => {
   })
 })
 
+router.get("/users", (req, res) => {
+  User.find({}, (err, users) => {
+      const filteredUsers = users.map((user) => {
+          return {
+              name: user.name,
+              posts: user.posts
+          };
+      });
+      res.send(filteredUsers);
+  });
+});
+
+
 module.exports = router;
