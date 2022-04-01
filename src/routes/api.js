@@ -71,7 +71,7 @@ router.get("/delete/:id", (req, res) => {
 
 router.get("/posts", (req, res) => {
   Post.find({}, (err, posts) => {
-      const filteredUsers = posts.map((user) => {
+      const filteredUsers = posts.map((post) => {
           return {
               id: post.id,
               title: post.title,
