@@ -148,13 +148,7 @@
       <hr class="my-1 hr" style="width: 40%" size="6" />
     </div>
 
-    <% if (posts.length === 0) { %>
-    <div class="container mt-5">
-      <div class="alert alert-warning" role="alert">
-        Du har ingen posts endnu
-      </div>
-    </div>
-    <% } %> <% posts.forEach(post => { %> <% if (post.author[0] === user.id) {
+   <% posts.forEach(post => { %> <% if (post.author[0] === user.id) {
     %>
 
     <div class="container mb-5">
@@ -191,6 +185,11 @@
         </div>
       </div>
     </div>
-    <% } %> <% }); %>
+    <% } else { %>
+      <div class="container mt-5">
+        <div class="alert alert-warning" role="alert">
+          Du har ingen posts endnu
+        </div>
+        <% } %>  <% }); %>
   </body>
 </html>
